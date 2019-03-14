@@ -1,7 +1,7 @@
 <?php
 namespace App\Controllers;
-use Kaliba\Mvc\Controller;
-use Kaliba\Mvc\ViewModel;
+use Kaliba\MVC\Controller;
+use Kaliba\MVC\ViewModel;
 use Kaliba\Http\Request;
 use Kaliba\Validation\Validator;
 use App\Models\AuthManager;
@@ -15,9 +15,9 @@ class AuthController extends Controller
      */
     private $auth;
 	    
-    public function __construct(ViewModel $model)
+    public function __construct(ViewModel $viewModel)
     {
-        parent::__construct($model);
+        parent::__construct($viewModel);
         $this->auth = new AuthManager();
     }
       
@@ -28,8 +28,8 @@ class AuthController extends Controller
         $validator->rule('required', 'password')->message('Password is required');
 		
         if( !$validator->validate() ){
-            $this->model->setInput($validator->data());
-            $this->model->setErrors($validator->errors());
+            $this->viewModel->setInput($validator->data());
+            $this->viewModel->setErrors($validator->errors());
             redirect('index');
         }
         try{
@@ -40,8 +40,8 @@ class AuthController extends Controller
             if($this->auth->loggedIn()){
                 redirect('home');
             }else{
-                $this->model->setErrors($this->auth->getErrors());
-                $this->model->setInput($request->getData());
+                $this->viewModel->setErrors($this->auth->getErrors());
+                $this->viewModel->setInput($request->getData());
                 redirect('index');
             }
         } catch (\Exception $ex) {
