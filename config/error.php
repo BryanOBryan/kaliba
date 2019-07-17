@@ -1,12 +1,11 @@
 <?php
 
-return [
-    
+return [    
     "override"  =>  true,
     "level"     =>  E_ERROR,
     "display"   =>  true,
-    "log"       =>  true
-
+    "log"       =>  false,
+    "logpath"   =>  storage('logs')
 ];
     
     
